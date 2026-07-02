@@ -3,9 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a0f" />
-  <title>Wizard Communication — Digital &amp; Beyond</title>
-  <meta name="description" content="Wizard Communication is a Kolkata-born software &amp; UX consultancy crafting future-ready products since 2004. Custom software, AI, UX/UI, security and beyond." />
+  <meta name="theme-color" content="#f6f9fb" />
+  <title>Wizard Communication | Digital &amp; Beyond</title>
+  <meta name="description" content="Wizard Communication is a Kolkata-born software and UX consultancy crafting future-ready products since 2004. Custom software, AI, UX/UI, security and beyond." />
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>
+    (function () {
+      var m = localStorage.getItem('wiz-mode') || 'system';
+      var d = m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.mode = d ? 'dark' : 'light';
+      document.documentElement.dataset.accent = localStorage.getItem('wiz-accent') || 'teal';
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -16,8 +25,8 @@
   <!-- Preloader -->
   <div class="preloader" id="preloader">
     <div class="preloader__inner">
-      <span class="preloader__glyph">✦</span>
-      <span class="preloader__word">Wizard</span>
+      <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+      <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
       <span class="preloader__count" id="preCount">0</span>
     </div>
   </div>
@@ -31,28 +40,49 @@
 
   <!-- Nav -->
   <header class="nav" id="nav">
-    <a class="nav__logo" href="#top" data-magnetic>
-      <span class="nav__glyph">✦</span> Wizard<span class="nav__thin">Comm</span>
+    <a class="nav__logo" href="#top">
+      <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+      <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
       <span class="ver-pill">v1.01</span>
     </a>
-    <nav class="nav__links">
-      <a href="#work" data-magnetic>Work</a>
-      <a href="#services" data-magnetic>Services</a>
-      <a href="#studio" data-magnetic>Studio</a>
-      <a href="#journal" data-magnetic>Journey</a>
-      <a href="#contact" class="nav__cta" data-magnetic>Start a project</a>
-    </nav>
-    <button class="nav__burger" id="burger" aria-label="Menu">
-      <span></span><span></span>
-    </button>
+    <div class="nav__right">
+      <nav class="nav__links">
+        <a href="portfolio.html" data-magnetic>Portfolio</a>
+        <a href="#services" data-magnetic>Services</a>
+        <a href="#products" data-magnetic>Products</a>
+        <a href="#studio" data-magnetic>Studio</a>
+        <a href="#contact" class="nav__cta" data-magnetic>Start a project</a>
+      </nav>
+      <div class="settings">
+        <button class="settings__btn" id="settingsBtn" aria-label="Display settings" title="Display settings">◐</button>
+        <div class="settings__panel" id="settingsPanel">
+          <p class="settings__label">Appearance</p>
+          <div class="settings__seg" data-set="mode">
+            <button data-val="system">Auto</button>
+            <button data-val="light">Light</button>
+            <button data-val="dark">Dark</button>
+          </div>
+          <p class="settings__label">Foreground theme</p>
+          <div class="settings__swatches" data-set="accent">
+            <button data-val="teal" style="--sw:#1bb3df" aria-label="Wizard teal" title="Wizard teal"></button>
+            <button data-val="violet" style="--sw:#7c5cff" aria-label="Violet" title="Violet"></button>
+            <button data-val="amber" style="--sw:#f5a524" aria-label="Amber" title="Amber"></button>
+            <button data-val="emerald" style="--sw:#10b981" aria-label="Emerald" title="Emerald"></button>
+          </div>
+        </div>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- Fullscreen menu (mobile) -->
   <div class="menu" id="menu">
-    <a href="#work">Work</a>
+    <a href="portfolio.html">Portfolio</a>
     <a href="#services">Services</a>
+    <a href="#products">Products</a>
     <a href="#studio">Studio</a>
-    <a href="#journal">Journey</a>
     <a href="#contact">Contact</a>
   </div>
 
@@ -62,15 +92,15 @@
     <section class="hero">
       <canvas id="heroCanvas" class="hero__canvas"></canvas>
       <div class="hero__content">
-        <p class="hero__eyebrow reveal-line"><span>Software · UX · AI — Kolkata, est. 2004</span></p>
+        <p class="hero__eyebrow reveal-line"><span>Software · UX · AI · Kolkata, est. 2004</span></p>
         <h1 class="hero__title">
           <span class="hero__line"><span class="hero__word" data-split>Digital</span></span>
           <span class="hero__line hero__line--serif"><span class="hero__word" data-split><em>&amp;&nbsp;Beyond</em></span></span>
         </h1>
-        <p class="hero__sub reveal-line"><span>Future-ready technology, built for you. Two decades of turning
-        complex problems into products people love — from ideation to deployment, and everything after.</span></p>
+        <p class="hero__sub reveal-line"><span>Future-ready technology, built for you. For over two decades we have turned
+        complex problems into products people love, from ideation to deployment and everything after.</span></p>
         <div class="hero__actions">
-          <a href="#work" class="btn btn--fill" data-magnetic>Explore the work</a>
+          <a href="portfolio.html" class="btn btn--fill" data-magnetic>Explore the work</a>
           <a href="#contact" class="btn btn--ghost" data-magnetic>Talk to a wizard</a>
         </div>
       </div>
@@ -83,88 +113,94 @@
     <!-- ============ CLIENT MARQUEE ============ -->
     <section class="marquee" aria-label="Selected clients">
       <div class="marquee__track" data-speed="1">
-        <span>ITC Limited</span><i>✦</i><span>NEC Japan</span><i>✦</i><span>SAIL</span><i>✦</i>
-        <span>Sanofi Aventis</span><i>✦</i><span>UNICEF</span><i>✦</i><span>Parliament Museum of India</span><i>✦</i>
-        <span>CMC Limited</span><i>✦</i><span>ServiceWorks</span><i>✦</i><span>UIDAI</span><i>✦</i>
-        <span>Jadavpur University</span><i>✦</i><span>Amplo</span><i>✦</i><span>Wondr Years</span><i>✦</i>
+        <img src="/assets/clients/itc.png" alt="ITC Limited" /><i>✦</i>
+        <img src="/assets/clients/nec.png" alt="NEC" /><i>✦</i>
+        <img src="/assets/clients/sail.png" alt="SAIL" /><i>✦</i>
+        <img src="/assets/clients/sanofi.png" alt="Sanofi Aventis" /><i>✦</i>
+        <img src="/assets/clients/cmc.png" alt="CMC Limited" /><i>✦</i>
+        <img src="/assets/clients/parliament.jpg" alt="Parliament Museum of India" /><i>✦</i>
+        <img src="/assets/clients/amplo.png" alt="Amplo" /><i>✦</i>
+        <img src="/assets/clients/cdec.png" alt="CDEC" /><i>✦</i>
+        <img src="/assets/clients/crimzon.png" alt="Crimzon Glow" /><i>✦</i>
+        <img src="/assets/clients/trased.png" alt="Trased" /><i>✦</i>
       </div>
     </section>
 
     <!-- ============ MANIFESTO / WHO WE ARE ============ -->
     <section class="manifesto" id="studio">
-      <p class="section-tag reveal-line"><span>01 — Who we are</span></p>
+      <p class="section-tag reveal-line"><span>01 · Who we are</span></p>
       <h2 class="manifesto__text" data-scrub>
         Anyone can write code. Anyone can launch a campaign.
-        We exist for the harder part — solving <em>real business problems</em>
+        We exist for the harder part: solving <em>real business problems</em>
         with technology that keeps paying off long after launch.
       </h2>
       <div class="manifesto__grid">
         <div class="stat reveal-up">
           <span class="stat__num" data-count="22">0</span><span class="stat__plus">yrs</span>
-          <p>Building since 2004 — through every platform shift, still shipping.</p>
+          <p>Building since 2004, through every platform shift, still shipping.</p>
         </div>
         <div class="stat reveal-up">
           <span class="stat__num" data-count="200">0</span><span class="stat__plus">+</span>
           <p>Projects delivered across corporate, government and startups.</p>
         </div>
         <div class="stat reveal-up">
-          <span class="stat__num" data-count="100">0</span><span class="stat__plus">+</span>
-          <p>Long-term clients — most of them still with us. That's the metric we brag about.</p>
+          <span class="stat__num" data-count="150">0</span><span class="stat__plus">+</span>
+          <p>Live websites in production, from single-page brands to platforms.</p>
         </div>
       </div>
       <p class="manifesto__body reveal-up">
         Wizard Communication is a technology and strategic-consulting partner headquartered in
         Bidhannagar, Kolkata. We pair disciplined engineering with forward-thinking design and
-        data-driven insight, crafting solutions that scale with you — not against you.
+        data-driven insight, crafting solutions that scale with you instead of against you.
         One guiding principle since day one: <strong>do the right thing, every time.</strong>
       </p>
     </section>
 
     <!-- ============ SERVICES ============ -->
     <section class="services" id="services">
-      <p class="section-tag reveal-line"><span>02 — What we do</span></p>
+      <p class="section-tag reveal-line"><span>02 · What we do</span></p>
       <h2 class="section-title reveal-up">Capabilities,<br /><em>end to end.</em></h2>
       <ul class="services__list">
         <li class="service reveal-up" data-service>
           <span class="service__index">01</span>
           <h3 class="service__name">Custom Software</h3>
-          <p class="service__desc">Purpose-built platforms that fit your operation like a glove — ERP, SaaS, enterprise systems and the glue between them.</p>
+          <p class="service__desc">Purpose-built platforms that fit your operation like a glove: ERP, SaaS, enterprise systems and the glue between them.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">02</span>
           <h3 class="service__name">UX/UI Design</h3>
-          <p class="service__desc">Seamless, intuitive experiences designed around humans first — researched, prototyped, tested, refined.</p>
+          <p class="service__desc">Seamless, intuitive experiences designed around humans first. Researched, prototyped, tested, refined.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">03</span>
           <h3 class="service__name">Artificial Intelligence</h3>
-          <p class="service__desc">Practical AI — chatbots, ML pipelines and intelligent automation that optimise operations, not just decks.</p>
+          <p class="service__desc">Practical AI: chatbots, ML pipelines and intelligent automation that optimise operations, not just slide decks.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">04</span>
           <h3 class="service__name">Mobile Apps</h3>
-          <p class="service__desc">Native and cross-platform apps in Flutter and React Native — from field-service tools to consumer commerce.</p>
+          <p class="service__desc">Native and cross-platform apps in Flutter and React Native, from field-service tools to consumer commerce.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">05</span>
           <h3 class="service__name">Cyber Security</h3>
-          <p class="service__desc">Security woven in from the first commit — audits, hardening and robust protection for the data you're trusted with.</p>
+          <p class="service__desc">Security woven in from the first commit. Audits, hardening and robust protection for the data you are trusted with.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">06</span>
           <h3 class="service__name">Digital Marketing</h3>
-          <p class="service__desc">SEO and campaigns that compound — visibility, engagement and pipelines you can actually measure.</p>
+          <p class="service__desc">SEO and campaigns that compound: visibility, engagement and pipelines you can actually measure.</p>
           <span class="service__arrow">→</span>
         </li>
         <li class="service reveal-up" data-service>
           <span class="service__index">07</span>
           <h3 class="service__name">On-Demand Teams</h3>
-          <p class="service__desc">Senior engineers and designers, embedded when you need them — the staff-augmentation model trusted by NEC Japan.</p>
+          <p class="service__desc">Senior engineers and designers, embedded when you need them. The staff-augmentation model trusted by NEC Japan.</p>
           <span class="service__arrow">→</span>
         </li>
       </ul>
@@ -172,81 +208,114 @@
 
     <!-- ============ SELECTED WORK ============ -->
     <section class="work" id="work">
-      <p class="section-tag reveal-line"><span>03 — Selected work</span></p>
+      <p class="section-tag reveal-line"><span>03 · Selected work</span></p>
       <h2 class="section-title reveal-up">Proof,<br /><em>not promises.</em></h2>
       <div class="work__grid">
         <article class="case reveal-up" data-tilt>
-          <div class="case__visual" data-hue="258"><span class="case__glyph">◈</span></div>
+          <div class="case__visual"><img src="/assets/work/serviceworks.jpg" alt="ServiceWorks platform" loading="lazy" /></div>
           <div class="case__meta"><span>SaaS Platform</span><span>Field Services</span></div>
           <h3>ServiceWorks</h3>
-          <p>An end-to-end cloud platform running entire service businesses — inventory, sales, dispatch and visibility in one place. Entrepreneurs get their evenings back.</p>
+          <p>An end-to-end cloud platform running entire service businesses: real-time technician tracking, smart scheduling on Google Maps, integrated accounting and inventory in one place.</p>
         </article>
         <article class="case reveal-up" data-tilt>
-          <div class="case__visual" data-hue="16"><span class="case__glyph">✺</span></div>
+          <div class="case__visual"><img src="/assets/work/itc.jpg" alt="ITC Limited project" loading="lazy" /></div>
           <div class="case__meta"><span>Enterprise Software</span><span>FMCG</span></div>
           <h3>ITC Limited</h3>
-          <p>Digitised the fragrance development and approval pipeline for one of India's largest FMCG houses — multi-step audits and checks, moved from paper to platform.</p>
+          <p>Digitised the fragrance development and approval pipeline for one of India's largest FMCG houses. Multi-step audits and checks, moved from paper to platform.</p>
         </article>
         <article class="case reveal-up" data-tilt>
-          <div class="case__visual" data-hue="190"><span class="case__glyph">◍</span></div>
+          <div class="case__visual"><img src="/assets/work/kmiddleeast.jpg" alt="K Middle East website" loading="lazy" /></div>
           <div class="case__meta"><span>Web Experience</span><span>Immigration · UAE</span></div>
           <h3>K Middle East</h3>
-          <p>A high-conversion web presence for a UAE immigration specialist — visa processing for Canada, Turkey and Schengen, presented with clarity and speed.</p>
+          <p>A high-conversion web presence for a UAE immigration specialist. Visa processing for Canada, Turkey and Schengen, presented with clarity and speed.</p>
         </article>
         <article class="case reveal-up" data-tilt>
-          <div class="case__visual" data-hue="330"><span class="case__glyph">❋</span></div>
+          <div class="case__visual"><img src="/assets/work/girlco.webp" alt="Girlco e-commerce" loading="lazy" /></div>
           <div class="case__meta"><span>E-commerce + App</span><span>Beauty · Bangladesh</span></div>
-          <h3>Cosmetic Company</h3>
-          <p>Store, mobile app and social campaigns for an emerging beauty brand — built to grow with its audience, and it did.</p>
+          <h3>Girlco</h3>
+          <p>Store, mobile app and social campaigns for a fast-growing beauty and personal care brand. Built to grow with its audience, and it did.</p>
         </article>
         <article class="case case--wide reveal-up" data-tilt>
-          <div class="case__visual" data-hue="48"><span class="case__glyph">✦</span></div>
-          <div class="case__meta"><span>E-Learning</span><span>EdTech</span></div>
-          <h3>Wondr Years</h3>
-          <p>A responsive learning product with deep third-party integration — micro-learning, gamification, scenarios and simulations, delivered by a team that's been doing e-learning since 2004.</p>
+          <div class="case__visual"><img src="/assets/work/parliament1.jpg" alt="Parliament Museum interactive experience" loading="lazy" /></div>
+          <div class="case__meta"><span>Digital Experience</span><span>Museum · New Delhi</span></div>
+          <h3>Parliament Museum of India</h3>
+          <p>A story-telling interactive museum on the democratic heritage of India, woven from virtual 3D walkthroughs and rich-media interactions. Heritage, made explorable.</p>
+        </article>
+      </div>
+      <p class="work__more reveal-up"><a href="portfolio.html" class="btn btn--ghost" data-magnetic>View all 26 projects →</a></p>
+    </section>
+
+    <!-- ============ PRODUCTS ============ -->
+    <section class="products" id="products">
+      <p class="section-tag reveal-line"><span>04 · Products</span></p>
+      <h2 class="section-title reveal-up">Ready to run,<br /><em>day one.</em></h2>
+      <div class="products__grid">
+        <article class="product reveal-up">
+          <span class="product__icon">◈</span>
+          <h3>Smart Commerce Suite</h3>
+          <p>All-in-one commerce operations: orders, products, inventory and delivery management with a companion mobile app.</p>
+        </article>
+        <article class="product reveal-up">
+          <span class="product__icon">◍</span>
+          <h3>Smart Asset Management</h3>
+          <p>Intelligent asset tracking, maintenance and lifecycle management with centralized allocation and financial sync. Live at gobiens.com.</p>
+        </article>
+        <article class="product reveal-up">
+          <span class="product__icon">✺</span>
+          <h3>Restaurant Management</h3>
+          <p>Inventory, purchase orders, HRMS, attendance, rosters and housekeeping for food businesses, consolidated in one system.</p>
+        </article>
+        <article class="product reveal-up">
+          <span class="product__icon">❋</span>
+          <h3>Smart Restaurant POS</h3>
+          <p>Fast, reliable point of sale: table management, kitchen order tickets, billing, QR ordering and sales reporting.</p>
         </article>
       </div>
     </section>
 
     <!-- ============ INDUSTRIES ============ -->
     <section class="industries">
-      <p class="section-tag reveal-line"><span>04 — Where we play</span></p>
+      <p class="section-tag reveal-line"><span>05 · Where we play</span></p>
       <h2 class="section-title reveal-up">Fluent in<br /><em>your industry.</em></h2>
       <div class="industries__accordion" id="accordion">
         <div class="acc-item reveal-up">
           <button class="acc-item__head"><span>Retail &amp; Commerce</span><span class="acc-item__icon">+</span></button>
-          <div class="acc-item__body"><p>E-commerce rewrote retail's rules. We bring depth in merchandising, pricing, assortment planning and supply chain — helping retailers of every size defend margin and win presence.</p></div>
+          <div class="acc-item__body"><p>E-commerce rewrote retail's rules. We bring depth in merchandising, pricing, assortment planning and supply chain, helping retailers of every size defend margin and win presence.</p></div>
         </div>
         <div class="acc-item reveal-up">
           <button class="acc-item__head"><span>Manufacturing</span><span class="acc-item__icon">+</span></button>
-          <div class="acc-item__body"><p>Capital hides in inventory. Our supply-chain and production-planning expertise finds it fast — with unconventional solutions tailored to the factory floor, not the whiteboard.</p></div>
+          <div class="acc-item__body"><p>Capital hides in inventory. Our supply-chain and production-planning expertise finds it fast, with unconventional solutions tailored to the factory floor rather than the whiteboard.</p></div>
         </div>
         <div class="acc-item reveal-up">
           <button class="acc-item__head"><span>Hospitality</span><span class="acc-item__icon">+</span></button>
-          <div class="acc-item__body"><p>We modernise reservation and property-management systems and wire them into global marketplace channels — so full houses become the default.</p></div>
+          <div class="acc-item__body"><p>We modernise reservation and property-management systems and wire them into global marketplace channels, so full houses become the default.</p></div>
         </div>
         <div class="acc-item reveal-up">
           <button class="acc-item__head"><span>Service Businesses</span><span class="acc-item__icon">+</span></button>
-          <div class="acc-item__body"><p>360° management platforms from booking to delivery — Android, iOS and enterprise backends working as one system.</p></div>
+          <div class="acc-item__body"><p>360° management platforms from booking to delivery. Android, iOS and enterprise backends working as one system.</p></div>
         </div>
         <div class="acc-item reveal-up">
           <button class="acc-item__head"><span>E-Learning</span><span class="acc-item__icon">+</span></button>
-          <div class="acc-item__body"><p>Our founding craft. Performance-driven learning that goes far beyond content delivery — mobile micro-learning packed with gamification, scenarios and simulations.</p></div>
+          <div class="acc-item__body"><p>Our founding craft. Performance-driven learning that goes far beyond content delivery: mobile micro-learning packed with gamification, scenarios and simulations.</p></div>
+        </div>
+        <div class="acc-item reveal-up">
+          <button class="acc-item__head"><span>Healthcare</span><span class="acc-item__icon">+</span></button>
+          <div class="acc-item__body"><p>From on-demand home healthcare platforms to clinical operations tooling, we build systems where reliability is non-negotiable.</p></div>
         </div>
       </div>
     </section>
 
     <!-- ============ TIMELINE ============ -->
     <section class="timeline" id="journal">
-      <p class="section-tag reveal-line"><span>05 — The journey</span></p>
+      <p class="section-tag reveal-line"><span>06 · The journey</span></p>
       <h2 class="section-title reveal-up">Two decades,<br /><em>still curious.</em></h2>
       <div class="timeline__track">
         <div class="tl-item reveal-up"><span class="tl-item__year">2004</span><p>Founded in Kolkata. First e-learning and portal work for Jadavpur University, the Parliament Museum of India, UNICEF and the Chartered Institute of Marketing UK.</p></div>
-        <div class="tl-item reveal-up"><span class="tl-item__year">2008</span><p>Transformed into a technology-driven software company — custom software, databases, enterprise solutions.</p></div>
+        <div class="tl-item reveal-up"><span class="tl-item__year">2008</span><p>Transformed into a technology-driven software company: custom software, databases, enterprise solutions.</p></div>
         <div class="tl-item reveal-up"><span class="tl-item__year">2012</span><p>Went mobile and responsive. Began building ServiceWorks, our flagship field-service platform.</p></div>
         <div class="tl-item reveal-up"><span class="tl-item__year">2016</span><p>Expanded across healthcare, government, retail and education. Delivered portals for ITC Infotech.</p></div>
-        <div class="tl-item reveal-up"><span class="tl-item__year">2020</span><p>Digital transformation era — Smart Commerce Management Suite and staff augmentation for NEC Japan.</p></div>
-        <div class="tl-item reveal-up"><span class="tl-item__year">Now</span><p>AI chatbots, HRMS, asset management, restaurant systems, delivery platforms — and whatever's next.</p></div>
+        <div class="tl-item reveal-up"><span class="tl-item__year">2020</span><p>Digital transformation era: the Smart Commerce Management Suite and staff augmentation for NEC Japan.</p></div>
+        <div class="tl-item reveal-up"><span class="tl-item__year">Now</span><p>AI chatbots, HRMS, asset management, restaurant systems, delivery platforms, and whatever's next.</p></div>
       </div>
     </section>
 
@@ -262,23 +331,35 @@
 
     <!-- ============ TESTIMONIALS ============ -->
     <section class="voices">
-      <p class="section-tag reveal-line"><span>06 — In their own words</span></p>
+      <p class="section-tag reveal-line"><span>07 · In their own words</span></p>
       <div class="voices__slider" id="voices">
         <blockquote class="voice is-active">
           <p>"An exemplary partner for the development and localization of one of our flagship programs. Their dedication, quality and commitment to timelines ensured a high level of end-customer satisfaction."</p>
-          <cite>Aniruddha Sur — Sr. Project Manager, Adayana Learning Solutions</cite>
+          <div class="voice__who">
+            <img src="/assets/team/aniruddha.png" alt="Aniruddha Sur" loading="lazy" />
+            <cite>Aniruddha Sur · Sr. Project Manager, Adayana Learning Solutions</cite>
+          </div>
         </blockquote>
         <blockquote class="voice">
           <p>"Commendable support and assistance in setting up the digital experience."</p>
-          <cite>Parliament Museum of India, New Delhi</cite>
+          <div class="voice__who">
+            <img src="/assets/clients/parliament.jpg" alt="Parliament Museum of India" loading="lazy" />
+            <cite>Parliament Museum of India, New Delhi</cite>
+          </div>
         </blockquote>
         <blockquote class="voice">
           <p>"An outstanding partner for education and training services. Their dedication, quality and commitment is excellent, with a high level of customer satisfaction."</p>
-          <cite>Prof. Subir Ghosh — Principal, Bhavan's Asutosh College, Kolkata</cite>
+          <div class="voice__who">
+            <img src="/assets/team/subirghosh.jpg" alt="Prof. Subir Ghosh" loading="lazy" />
+            <cite>Prof. Subir Ghosh · Principal, Bhavan's Asutosh College, Kolkata</cite>
+          </div>
         </blockquote>
         <blockquote class="voice">
-          <p>"Outstanding in significant courseware development projects — digital learning experience and localization done right."</p>
-          <cite>CMC Ltd, Mumbai</cite>
+          <p>"Outstanding in significant courseware development projects: digital learning experience and localization done right."</p>
+          <div class="voice__who">
+            <img src="/assets/clients/cmc.png" alt="CMC Ltd" loading="lazy" />
+            <cite>CMC Ltd, Mumbai</cite>
+          </div>
         </blockquote>
       </div>
       <div class="voices__nav">
@@ -290,23 +371,65 @@
 
     <!-- ============ TEAM ============ -->
     <section class="team">
-      <p class="section-tag reveal-line"><span>07 — The wizards</span></p>
+      <p class="section-tag reveal-line"><span>08 · The wizards</span></p>
       <h2 class="section-title reveal-up">Senior by<br /><em>default.</em></h2>
-      <ul class="team__list">
-        <li class="reveal-up"><span class="team__name">Sumit Sarkar</span><span class="team__role">CEO &amp; Founder</span><span class="team__yrs">20+ yrs — design, software, product</span></li>
-        <li class="reveal-up"><span class="team__name">Biswajit Banerjee</span><span class="team__role">CTO</span><span class="team__yrs">14+ yrs — scalable systems &amp; strategy</span></li>
-        <li class="reveal-up"><span class="team__name">Viswarup Bal</span><span class="team__role">IT Manager, Sr. Development</span><span class="team__yrs">20+ yrs — full development lifecycle</span></li>
-        <li class="reveal-up"><span class="team__name">Anup Kumar Ghosh</span><span class="team__role">Senior IT Manager</span><span class="team__yrs">19+ yrs — .NET</span></li>
-        <li class="reveal-up"><span class="team__name">Joydeep Mukherjee</span><span class="team__role">Senior Software Engineer</span><span class="team__yrs">13+ yrs — SQL Server, ASP.NET</span></li>
-        <li class="reveal-up"><span class="team__name">Tirthankar Dey</span><span class="team__role">Senior Software Engineer</span><span class="team__yrs">14 yrs — .NET technologies</span></li>
-      </ul>
+      <div class="team__grid">
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/sumit.jpg" alt="Sumit Sarkar" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Sumit Sarkar</h3>
+            <span class="member__role">CEO &amp; Founder</span>
+            <p class="member__yrs">20+ years in design, software and product management</p>
+          </div>
+        </article>
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/biswajit.jpg" alt="Biswajit Banerjee" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Biswajit Banerjee</h3>
+            <span class="member__role">CTO</span>
+            <p class="member__yrs">14+ years in scalable systems and technical strategy</p>
+          </div>
+        </article>
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/viswarup.jpg" alt="Viswarup Bal" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Viswarup Bal</h3>
+            <span class="member__role">IT Manager, Sr. Development</span>
+            <p class="member__yrs">20+ years across the full development lifecycle</p>
+          </div>
+        </article>
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/anup.webp" alt="Anup Kumar Ghosh" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Anup Kumar Ghosh</h3>
+            <span class="member__role">Senior IT Manager</span>
+            <p class="member__yrs">19+ years in .NET development</p>
+          </div>
+        </article>
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/joydeep.webp" alt="Joydeep Mukherjee" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Joydeep Mukherjee</h3>
+            <span class="member__role">Senior Software Engineer</span>
+            <p class="member__yrs">13+ years in SQL Server and ASP.NET</p>
+          </div>
+        </article>
+        <article class="member reveal-up">
+          <div class="member__photo"><img src="/assets/team/tirthankar.webp" alt="Tirthankar Dey" loading="lazy" /></div>
+          <div class="member__info">
+            <h3 class="member__name">Tirthankar Dey</h3>
+            <span class="member__role">Senior Software Engineer</span>
+            <p class="member__yrs">14 years in .NET technologies</p>
+          </div>
+        </article>
+      </div>
     </section>
 
     <!-- ============ CONTACT / FOOTER ============ -->
     <footer class="contact" id="contact">
       <canvas id="footCanvas" class="contact__canvas"></canvas>
       <div class="contact__inner">
-        <p class="section-tag reveal-line"><span>08 — Say hello</span></p>
+        <p class="section-tag reveal-line"><span>09 · Say hello</span></p>
         <h2 class="contact__title reveal-up">Let's build<br /><em>your next thing.</em></h2>
         <a class="contact__mail reveal-up" href="mailto:info@wizardcomm.net" data-magnetic>info@wizardcomm.net</a>
         <div class="contact__grid">
@@ -327,9 +450,13 @@
             </p>
           </div>
         </div>
+        <div class="contact__brand">
+          <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+          <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
+        </div>
         <div class="contact__bottom">
           <span>© 2026 Wizard Communications Pvt Ltd. All rights reserved.</span>
-          <span>Digital &amp; Beyond — since 2004</span>
+          <span>Digital &amp; Beyond, since 2004</span>
           <a href="./404.html">404, but make it art</a>
         </div>
       </div>

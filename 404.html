@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — Wizard Communication</title>
+  <meta name="theme-color" content="#f6f9fb" />
+  <title>404 | Wizard Communication</title>
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>
+    (function () {
+      var m = localStorage.getItem('wiz-mode') || 'system';
+      var d = m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.mode = d ? 'dark' : 'light';
+      document.documentElement.dataset.accent = localStorage.getItem('wiz-accent') || 'teal';
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
@@ -15,42 +25,47 @@
   <div class="cursor-dot" id="cursorDot"></div>
 
   <header class="nav">
-    <a class="nav__logo" href="./"><span class="nav__glyph">✦</span> Wizard<span class="nav__thin">Comm</span> <span class="ver-pill">v1.01</span></a>
+    <a class="nav__logo" href="./">
+      <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+      <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
+      <span class="ver-pill">v1.01</span>
+    </a>
+    <div class="nav__right">
+      <div class="settings">
+        <button class="settings__btn" id="settingsBtn" aria-label="Display settings" title="Display settings">◐</button>
+        <div class="settings__panel" id="settingsPanel">
+          <p class="settings__label">Appearance</p>
+          <div class="settings__seg" data-set="mode">
+            <button data-val="system">Auto</button>
+            <button data-val="light">Light</button>
+            <button data-val="dark">Dark</button>
+          </div>
+          <p class="settings__label">Foreground theme</p>
+          <div class="settings__swatches" data-set="accent">
+            <button data-val="teal" style="--sw:#1bb3df" aria-label="Wizard teal" title="Wizard teal"></button>
+            <button data-val="violet" style="--sw:#7c5cff" aria-label="Violet" title="Violet"></button>
+            <button data-val="amber" style="--sw:#f5a524" aria-label="Amber" title="Amber"></button>
+            <button data-val="emerald" style="--sw:#10b981" aria-label="Emerald" title="Emerald"></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main class="p404">
     <canvas id="p404Canvas" class="p404__canvas"></canvas>
     <div class="p404__inner">
       <h1 class="p404__code">4<em>0</em>4</h1>
-      <p class="p404__msg">This spell fizzled — the page you seek has vanished beyond the veil.</p>
+      <p class="p404__msg">This spell fizzled. The page you seek has vanished beyond the veil.</p>
       <a href="./" class="btn btn--fill" data-magnetic>Return to the known world</a>
     </div>
   </main>
 
   <script type="module">
     import { mountScene } from '/src/scene.js';
+    import { initCommon } from '/src/common.js';
+    initCommon();
     mountScene(document.getElementById('p404Canvas'), { density: 0.7, sigil: true });
-
-    document.querySelectorAll('.ver-pill').forEach((el) => { el.textContent = __BUILD_VERSION__; });
-
-    const cursor = document.getElementById('cursor');
-    const dot = document.getElementById('cursorDot');
-    if (matchMedia('(hover: hover)').matches) {
-      let cx = 0, cy = 0, tx = 0, ty = 0;
-      window.addEventListener('pointermove', (e) => {
-        tx = e.clientX; ty = e.clientY;
-        dot.style.transform = `translate(${tx}px, ${ty}px) translate(-50%,-50%)`;
-      });
-      (function follow() {
-        cx += (tx - cx) * 0.16; cy += (ty - cy) * 0.16;
-        cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
-        requestAnimationFrame(follow);
-      })();
-      document.querySelectorAll('a').forEach((el) => {
-        el.addEventListener('pointerenter', () => cursor.classList.add('is-hover'));
-        el.addEventListener('pointerleave', () => cursor.classList.remove('is-hover'));
-      });
-    }
   </script>
 </body>
 </html>

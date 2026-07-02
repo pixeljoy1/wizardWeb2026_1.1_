@@ -1,7 +1,7 @@
 import { mountScene } from './scene.js';
+import { initCommon } from './common.js';
 
-/* ============ Build version pill ============ */
-document.querySelectorAll('.ver-pill').forEach((el) => { el.textContent = __BUILD_VERSION__; });
+initCommon();
 
 /* ============ Preloader ============ */
 const preloader = document.getElementById('preloader');
@@ -27,7 +27,7 @@ document.querySelectorAll('[data-split]').forEach((el) => {
   chars.forEach((c, i) => {
     const s = document.createElement('span');
     s.className = 'ch';
-    s.textContent = c === ' ' ? ' ' : c;
+    s.textContent = c === ' ' ? ' ' : c;
     s.style.transitionDelay = `${0.4 + i * 0.045}s`;
     target.appendChild(s);
   });
@@ -47,17 +47,6 @@ window.addEventListener('scroll', () => {
   progress.style.width = `${p * 100}%`;
   if (heroScene) heroScene.setScroll(Math.min(window.scrollY / window.innerHeight, 1.5));
 }, { passive: true });
-
-/* ============ Reveal on scroll ============ */
-const revealer = new IntersectionObserver((entries) => {
-  entries.forEach((e) => {
-    if (e.isIntersecting) {
-      e.target.classList.add('is-in');
-      revealer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal-up, .reveal-line').forEach((el) => revealer.observe(el));
 
 /* ============ Manifesto word-scrub ============ */
 const scrub = document.querySelector('[data-scrub]');
@@ -152,45 +141,17 @@ if (voices.length) {
 }
 
 /* ============ Case card tilt (pointer devices only) ============ */
-const canHover = matchMedia('(hover: hover)').matches;
-document.querySelectorAll('[data-tilt]').forEach((card) => {
-  const visual = card.querySelector('.case__visual');
-  if (visual) visual.style.setProperty('--h', visual.dataset.hue);
-  if (!canHover) return;
-  card.addEventListener('pointermove', (e) => {
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-4px)`;
-  });
-  card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-});
-
-/* ============ Custom cursor + magnetic elements ============ */
-const cursor = document.getElementById('cursor');
-const dot = document.getElementById('cursorDot');
-if (cursor && matchMedia('(hover: hover)').matches) {
-  let cx = 0, cy = 0, tx = 0, ty = 0;
-  window.addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; dot.style.transform = `translate(${tx}px, ${ty}px) translate(-50%,-50%)`; });
-  (function follow() {
-    cx += (tx - cx) * 0.16;
-    cy += (ty - cy) * 0.16;
-    cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
-    requestAnimationFrame(follow);
-  })();
-  document.querySelectorAll('a, button, [data-service]').forEach((el) => {
-    el.addEventListener('pointerenter', () => cursor.classList.add('is-hover'));
-    el.addEventListener('pointerleave', () => cursor.classList.remove('is-hover'));
+if (matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('[data-tilt]').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-4px)`;
+    });
+    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
   });
 }
-
-if (canHover) document.querySelectorAll('[data-magnetic]').forEach((el) => {
-  el.addEventListener('pointermove', (e) => {
-    const r = el.getBoundingClientRect();
-    el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.25}px)`;
-  });
-  el.addEventListener('pointerleave', () => { el.style.transform = ''; });
-});
 
 /* ============ Mobile menu ============ */
 const burger = document.getElementById('burger');
