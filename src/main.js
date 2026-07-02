@@ -149,6 +149,31 @@ document.querySelectorAll('.marquee__track').forEach((track) => {
   })();
 });
 
+/* ============ Service detail panels ============ */
+document.querySelectorAll('[data-service]').forEach((row) => {
+  const detail = row.querySelector('.service__detail');
+  if (!detail) return;
+  const toggle = () => {
+    const open = row.classList.toggle('is-open');
+    row.setAttribute('aria-expanded', open);
+    detail.style.maxHeight = open ? `${detail.scrollHeight}px` : '0';
+    document.querySelectorAll('.service.is-open').forEach((other) => {
+      if (other !== row) {
+        other.classList.remove('is-open');
+        other.setAttribute('aria-expanded', 'false');
+        other.querySelector('.service__detail').style.maxHeight = '0';
+      }
+    });
+  };
+  row.addEventListener('click', (e) => {
+    if (e.target.closest('.service__cta')) return; // let the CTA link navigate
+    toggle();
+  });
+  row.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+  });
+});
+
 /* ============ Accordion ============ */
 document.querySelectorAll('.acc-item').forEach((item) => {
   item.querySelector('.acc-item__head').addEventListener('click', () => {

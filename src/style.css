@@ -79,17 +79,47 @@ main { position: relative; z-index: 1; }
 .preloader__count { font-family: var(--mono); font-size: 1rem; color: var(--ink-dim); min-width: 3ch; }
 @keyframes pulse { 50% { opacity: 0.45; } }
 
-/* ---------- Cursor ---------- */
-.cursor, .cursor-dot { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99; border-radius: 50%; }
-.cursor {
-  width: 36px; height: 36px;
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s;
+/* ---------- Cursor: the Wizard arrow, orbited by sparks ---------- */
+@media (hover: hover) and (pointer: fine) {
+  * { cursor: none !important; }
 }
-.cursor.is-hover { width: 64px; height: 64px; background: var(--accent-soft); }
-.cursor-dot { width: 5px; height: 5px; background: var(--accent); transform: translate(-50%, -50%); }
-@media (hover: none) { .cursor, .cursor-dot { display: none; } }
+.wcursor { position: fixed; top: 0; left: 0; z-index: 99; pointer-events: none; }
+.wcursor__inner {
+  position: relative;
+  /* hotspot: the arrow tip (svg 7,5 at 27px render) sits on the pointer */
+  transform: translate(-5.5px, -4px);
+  transition: transform 0.35s var(--ease);
+}
+.wcursor.is-hover .wcursor__inner { transform: translate(-5.5px, -4px) scale(1.4); }
+.wcursor__arrow { width: 27px; height: 27px; display: block; will-change: transform; }
+.wcursor__arrow path {
+  fill: var(--accent);
+  stroke: var(--bg); stroke-width: 1.6; stroke-linejoin: round;
+}
+.wcursor__node { fill: var(--ink); stroke: var(--bg); stroke-width: 1.2; }
+.wcursor__node--sm { fill: var(--accent-hot); }
+.wcursor__orbit {
+  position: absolute; left: 11px; top: 11px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  animation: worbit 2.4s linear infinite;
+  opacity: 0.9;
+}
+.wcursor__orbit--2 {
+  width: 4px; height: 4px; opacity: 0.6;
+  animation: worbit 3.4s linear infinite reverse;
+  --orbit-r: 27px;
+}
+.wcursor__orbit--3 {
+  /* a stray pixel, like the squares at the logo's base */
+  width: 4px; height: 4px; border-radius: 1px; background: var(--ink);
+  animation: worbit 1.7s linear infinite;
+  --orbit-r: 15px; opacity: 0.75;
+}
+@keyframes worbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r, 21px)) rotate(45deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-r, 21px)) rotate(405deg); }
+}
+@media (hover: none) { .wcursor { display: none; } }
 
 /* ---------- Progress ---------- */
 .progress {
@@ -301,21 +331,42 @@ body.is-loaded .hero__word .ch { transform: none; }
 /* ---------- Services ---------- */
 .services__list { list-style: none; }
 .service {
-  display: grid; grid-template-columns: 4rem 1fr 2rem; grid-template-areas: "idx name arrow" ". desc arrow";
+  display: grid; grid-template-columns: 4rem 1fr 2rem;
+  grid-template-areas: "idx name arrow" ". desc arrow" ". detail detail";
   align-items: baseline; gap: 0.3rem 1.5rem;
   padding: 2rem 1rem; border-top: 1px solid var(--line);
   cursor: pointer; position: relative; transition: background 0.4s, padding-left 0.4s var(--ease);
 }
 .service:last-child { border-bottom: 1px solid var(--line); }
-.service:hover { background: var(--bg-soft); padding-left: 2rem; }
+.service:hover, .service.is-open { background: var(--bg-soft); }
+.service:hover { padding-left: 2rem; }
 .service__index { grid-area: idx; font-family: var(--mono); font-size: 0.75rem; color: var(--accent); }
 .service__name { grid-area: name; font-size: clamp(1.5rem, 3.4vw, 2.6rem); font-weight: 400; letter-spacing: -0.01em; transition: color 0.3s; }
-.service:hover .service__name { color: var(--accent); }
-.service__desc { grid-area: desc; color: var(--ink-dim); font-size: 0.92rem; max-width: 620px; }
+.service:hover .service__name, .service.is-open .service__name { color: var(--accent); }
 .service__arrow { grid-area: arrow; align-self: center; font-size: 1.4rem; opacity: 0; transform: translateX(-12px); transition: 0.4s var(--ease); }
 .service:hover .service__arrow { opacity: 1; transform: none; color: var(--accent); }
+.service.is-open .service__arrow { opacity: 1; transform: rotate(90deg); color: var(--accent); }
+.service__detail { grid-area: detail; max-height: 0; overflow: hidden; transition: max-height 0.6s var(--ease); }
+.service__detail-inner { padding: 1.6rem 0 0.6rem; max-width: 720px; }
+.service__points { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0.7rem 2rem; }
+.service__points li { position: relative; padding-left: 1.3rem; color: var(--ink-dim); font-size: 0.92rem; }
+.service__points li::before { content: '✦'; position: absolute; left: 0; top: 0; color: var(--accent); font-size: 0.7rem; }
+.service__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.4rem; }
+.service__tags span {
+  font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 99px; padding: 0.3rem 0.75rem;
+}
+.service__cta {
+  display: inline-block; margin-top: 1.5rem;
+  font-size: 0.9rem; color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  padding-bottom: 0.15rem; transition: border-color 0.3s;
+}
+.service__cta:hover { border-color: var(--accent); }
 @media (max-width: 640px) {
-  .service { grid-template-columns: 2.4rem 1fr; grid-template-areas: "idx name" ". desc"; }
+  .service { grid-template-columns: 2.4rem 1fr; grid-template-areas: "idx name" ". desc" ". detail"; }
   .service__arrow { display: none; }
 }
 

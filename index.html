@@ -32,8 +32,18 @@
   </div>
 
   <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="wcursor" id="wcursor" aria-hidden="true">
+    <div class="wcursor__inner">
+      <svg class="wcursor__arrow" viewBox="0 0 36 36">
+        <path d="M7 5 L29 15.5 L19.5 18.5 L24.5 30 L18.5 32.5 L14 20.5 L7 27 Z" />
+        <circle class="wcursor__node" cx="7" cy="5" r="3.4" />
+        <circle class="wcursor__node wcursor__node--sm" cx="29" cy="15.5" r="2.6" />
+      </svg>
+      <span class="wcursor__orbit wcursor__orbit--1"></span>
+      <span class="wcursor__orbit wcursor__orbit--2"></span>
+      <span class="wcursor__orbit wcursor__orbit--3"></span>
+    </div>
+  </div>
 
   <!-- Progress bar -->
   <div class="progress" id="progress"></div>
@@ -164,47 +174,131 @@
       <p class="section-tag reveal-line"><span>02 · What we do</span></p>
       <h2 class="section-title reveal-up">Capabilities,<br /><em>end to end.</em></h2>
       <ul class="services__list">
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">01</span>
           <h3 class="service__name">Custom Software</h3>
           <p class="service__desc">Purpose-built platforms that fit your operation like a glove: ERP, SaaS, enterprise systems and the glue between them.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>Discovery workshops and solution architecture</li>
+                <li>ERP, CRM and SaaS platform builds</li>
+                <li>API design and legacy system integration</li>
+                <li>Long-term maintenance and support</li>
+              </ul>
+              <div class="service__tags"><span>.NET</span><span>Node.js</span><span>Python</span><span>MSSQL</span><span>Azure</span><span>AWS</span></div>
+              <a class="service__cta" href="#contact">Scope your build →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">02</span>
           <h3 class="service__name">UX/UI Design</h3>
           <p class="service__desc">Seamless, intuitive experiences designed around humans first. Researched, prototyped, tested, refined.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>User research and journey mapping</li>
+                <li>Wireframes, prototypes and usability testing</li>
+                <li>Design systems that scale with your product</li>
+                <li>Accessibility built in, not bolted on</li>
+              </ul>
+              <div class="service__tags"><span>Figma</span><span>Design systems</span><span>Prototyping</span><span>WCAG</span></div>
+              <a class="service__cta" href="#contact">Design with us →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">03</span>
           <h3 class="service__name">Artificial Intelligence</h3>
           <p class="service__desc">Practical AI: chatbots, ML pipelines and intelligent automation that optimise operations, not just slide decks.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>Customer-facing chatbots and copilots</li>
+                <li>ML pipelines and predictive analytics</li>
+                <li>Document and workflow automation</li>
+                <li>BI dashboards your team will actually open</li>
+              </ul>
+              <div class="service__tags"><span>OpenAI</span><span>Python</span><span>AI/ML</span><span>BI</span></div>
+              <a class="service__cta" href="#contact">Find your AI use case →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">04</span>
           <h3 class="service__name">Mobile Apps</h3>
           <p class="service__desc">Native and cross-platform apps in Flutter and React Native, from field-service tools to consumer commerce.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>iOS and Android from one codebase</li>
+                <li>Offline-first field tools and consumer apps</li>
+                <li>Store submission and release management</li>
+                <li>Crash monitoring and iteration after launch</li>
+              </ul>
+              <div class="service__tags"><span>Flutter</span><span>React Native</span><span>iOS</span><span>Android</span></div>
+              <a class="service__cta" href="#contact">Ship your app →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">05</span>
           <h3 class="service__name">Cyber Security</h3>
           <p class="service__desc">Security woven in from the first commit. Audits, hardening and robust protection for the data you are trusted with.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>Security audits and risk assessment</li>
+                <li>Secure development lifecycle practices</li>
+                <li>Data protection and access hardening</li>
+                <li>Monitoring and incident response readiness</li>
+              </ul>
+              <div class="service__tags"><span>Audits</span><span>Hardening</span><span>Compliance</span><span>Monitoring</span></div>
+              <a class="service__cta" href="#contact">Review your posture →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">06</span>
           <h3 class="service__name">Digital Marketing</h3>
           <p class="service__desc">SEO and campaigns that compound: visibility, engagement and pipelines you can actually measure.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>Technical and content SEO</li>
+                <li>Social campaigns with creative production</li>
+                <li>Landing pages built to convert</li>
+                <li>Analytics and reporting you can act on</li>
+              </ul>
+              <div class="service__tags"><span>SEO</span><span>Campaigns</span><span>Social</span><span>Analytics</span></div>
+              <a class="service__cta" href="#contact">Grow your reach →</a>
+            </div>
+          </div>
         </li>
-        <li class="service reveal-up" data-service>
+        <li class="service reveal-up" data-service tabindex="0" aria-expanded="false">
           <span class="service__index">07</span>
           <h3 class="service__name">On-Demand Teams</h3>
           <p class="service__desc">Senior engineers and designers, embedded when you need them. The staff-augmentation model trusted by NEC Japan.</p>
           <span class="service__arrow">→</span>
+          <div class="service__detail">
+            <div class="service__detail-inner">
+              <ul class="service__points">
+                <li>Senior engineers embedded in your team</li>
+                <li>Scale up or down month to month</li>
+                <li>Your process, your tools, our people</li>
+                <li>The model NEC Japan has trusted since 2020</li>
+              </ul>
+              <div class="service__tags"><span>Staff augmentation</span><span>Dedicated teams</span><span>Flexible</span></div>
+              <a class="service__cta" href="#contact">Meet your team →</a>
+            </div>
+          </div>
         </li>
       </ul>
     </section>
