@@ -42,3 +42,6 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # Pages queue can back up well past the 10-min default
+          timeout: 1800000
