@@ -111,7 +111,11 @@ main { position: relative; z-index: 1; }
 .nav__logo { display: flex; align-items: center; gap: 0.55rem; }
 .logo-img { height: 34px; width: auto; display: none; }
 [data-mode='light'] .logo-img--light { display: block; }
-[data-mode='dark'] .logo-img--dark { display: block; }
+[data-mode='dark'] .logo-img--dark {
+  display: block;
+  /* source art is flat #777; lift it to white for contrast on dark */
+  filter: brightness(0) invert(1);
+}
 .ver-pill {
   display: inline-block;
   font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
@@ -373,10 +377,21 @@ body.is-loaded .hero__word .ch { transform: none; }
 .tl-item__year { font-family: var(--serif); font-style: italic; font-size: 2rem; color: var(--accent); display: block; margin-bottom: 0.6rem; }
 .tl-item p { color: var(--ink-dim); font-size: 0.88rem; }
 
-/* ---------- Voices ---------- */
-.voices__slider { position: relative; min-height: 300px; max-width: 900px; }
-.voice { position: absolute; inset: 0; opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); pointer-events: none; }
-.voice.is-active { opacity: 1; transform: none; pointer-events: auto; }
+/* ---------- Voices (swipeable snap carousel) ---------- */
+.voices__slider {
+  display: flex; max-width: 900px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+.voices__slider::-webkit-scrollbar { display: none; }
+.voice {
+  flex: 0 0 100%; scroll-snap-align: center;
+  padding: 0.5rem 2.5rem 0.5rem 0.25rem;
+  opacity: 0.3; transform: scale(0.965);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+}
+.voice.is-active { opacity: 1; transform: none; }
 .voice p { font-family: var(--serif); font-size: clamp(1.3rem, 2.8vw, 2rem); line-height: 1.35; font-weight: 400; }
 .voice__who { display: flex; align-items: center; gap: 1rem; margin-top: 1.8rem; }
 .voice__who img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); background: #fff; }
@@ -545,7 +560,6 @@ body.is-loaded .hero__word .ch { transform: none; }
 
 /* ---------- Mobile / large-phone polish ---------- */
 @media (max-width: 640px) {
-  .voices__slider { min-height: 440px; }
   .case__visual { height: 180px; }
   .hero { padding-top: 6.5rem; }
   .hero__scroll { display: none; }
@@ -560,7 +574,6 @@ body.is-loaded .hero__word .ch { transform: none; }
   .nav { padding: 0.8rem 1.1rem; }
   .logo-img { height: 28px; }
   .ver-pill { font-size: 0.52rem; padding: 0.12rem 0.42rem; }
-  .voices__slider { min-height: 500px; }
   .manifesto__grid { gap: 1.8rem; }
   .section-title { margin-bottom: 2rem; }
   .filters, .pf-grid { padding-left: 1.1rem; padding-right: 1.1rem; }

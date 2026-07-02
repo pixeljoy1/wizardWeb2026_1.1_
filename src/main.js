@@ -164,19 +164,60 @@ document.querySelectorAll('.acc-item').forEach((item) => {
   });
 });
 
-/* ============ Testimonial slider ============ */
-const voices = [...document.querySelectorAll('.voice')];
-if (voices.length) {
-  let idx = 0;
+/* ============ Testimonial carousel (snap scroll + drag/swipe) ============ */
+const voicesSlider = document.getElementById('voices');
+if (voicesSlider) {
+  const voices = [...voicesSlider.querySelectorAll('.voice')];
   const count = document.getElementById('voiceCount');
-  const show = (i) => {
-    idx = (i + voices.length) % voices.length;
+  let idx = 0;
+  let lastTouch = 0; // pause auto-advance after any interaction
+
+  const sync = () => {
+    idx = Math.round(voicesSlider.scrollLeft / voicesSlider.clientWidth);
+    idx = Math.max(0, Math.min(voices.length - 1, idx));
     voices.forEach((v, k) => v.classList.toggle('is-active', k === idx));
     count.textContent = `${idx + 1} / ${voices.length}`;
   };
-  document.getElementById('voicePrev').addEventListener('click', () => show(idx - 1));
-  document.getElementById('voiceNext').addEventListener('click', () => show(idx + 1));
-  setInterval(() => show(idx + 1), 7000);
+  voicesSlider.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+  sync();
+
+  const goTo = (i) => {
+    const n = (i + voices.length) % voices.length;
+    voicesSlider.scrollTo({ left: n * voicesSlider.clientWidth, behavior: 'smooth' });
+  };
+  document.getElementById('voicePrev').addEventListener('click', () => { lastTouch = Date.now(); goTo(idx - 1); });
+  document.getElementById('voiceNext').addEventListener('click', () => { lastTouch = Date.now(); goTo(idx + 1); });
+
+  // mouse drag scrubbing (touch swipes natively); snap pauses during the drag
+  let dragging = false, startX = 0, startLeft = 0;
+  voicesSlider.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') { lastTouch = Date.now(); return; }
+    dragging = true;
+    startX = e.clientX;
+    startLeft = voicesSlider.scrollLeft;
+    lastTouch = Date.now();
+    voicesSlider.style.scrollSnapType = 'none';
+    voicesSlider.style.cursor = 'grabbing';
+    voicesSlider.setPointerCapture(e.pointerId);
+  });
+  voicesSlider.addEventListener('pointermove', (e) => {
+    if (dragging) voicesSlider.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  const endDrag = () => {
+    if (!dragging) return;
+    dragging = false;
+    voicesSlider.style.cursor = 'grab';
+    voicesSlider.style.scrollSnapType = '';
+    goTo(Math.round(voicesSlider.scrollLeft / voicesSlider.clientWidth));
+  };
+  voicesSlider.addEventListener('pointerup', endDrag);
+  voicesSlider.addEventListener('pointercancel', endDrag);
+
+  setInterval(() => {
+    if (Date.now() - lastTouch > 9000) goTo(idx + 1);
+  }, 7000);
+
+  window.addEventListener('resize', () => goTo(idx));
 }
 
 /* ============ Case card tilt (pointer devices only) ============ */
