@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f6f9fb" />
+  <title>Mobile Apps | Wizard Communication</title>
+  <meta name="description" content="Mobile apps by Wizard Communication: native and cross-platform builds, featuring Drift, a sleep and relaxation app with living WebGL visuals and a synthesized audio engine." />
+  <link rel="icon" href="/assets/favicon.png" />
+  <script>
+    (function () {
+      var m = localStorage.getItem('wiz-mode') || 'system';
+      var d = m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.mode = d ? 'dark' : 'light';
+      document.documentElement.dataset.accent = localStorage.getItem('wiz-accent') || 'teal';
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body data-page="apps">
+
+  <div class="wcursor" id="wcursor" aria-hidden="true">
+    <div class="wcursor__inner">
+      <svg class="wcursor__arrow" viewBox="0 0 36 36">
+        <path d="M7 5 L29 15.5 L19.5 18.5 L24.5 30 L18.5 32.5 L14 20.5 L7 27 Z" />
+        <circle class="wcursor__node" cx="7" cy="5" r="3.4" />
+        <circle class="wcursor__node wcursor__node--sm" cx="29" cy="15.5" r="2.6" />
+      </svg>
+      <span class="wcursor__orbit wcursor__orbit--1"></span>
+      <span class="wcursor__orbit wcursor__orbit--2"></span>
+      <span class="wcursor__orbit wcursor__orbit--3"></span>
+    </div>
+  </div>
+
+  <header class="nav">
+    <a class="nav__logo" href="./">
+      <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+      <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
+      <span class="ver-pill">v1.01</span>
+    </a>
+    <div class="nav__right">
+      <nav class="nav__links">
+        <a href="./" data-magnetic>Home</a>
+        <a href="./#services" data-magnetic>Services</a>
+        <a href="portfolio.html" data-magnetic>Portfolio</a>
+        <a href="./#contact" class="nav__cta" data-magnetic>Start a project</a>
+      </nav>
+      <div class="settings">
+        <button class="settings__btn" id="settingsBtn" aria-label="Display settings" title="Display settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor"/></svg>
+          <span>Theme</span>
+        </button>
+        <div class="settings__panel" id="settingsPanel">
+          <p class="settings__label">Appearance</p>
+          <div class="settings__seg" data-set="mode">
+            <button data-val="system">Auto</button>
+            <button data-val="light">Light</button>
+            <button data-val="dark">Dark</button>
+          </div>
+          <p class="settings__label">Foreground theme</p>
+          <div class="settings__swatches" data-set="accent">
+            <button data-val="teal" style="--sw:#1bb3df"><i></i>Teal</button>
+            <button data-val="violet" style="--sw:#7c5cff"><i></i>Violet</button>
+            <button data-val="amber" style="--sw:#f5a524"><i></i>Amber</button>
+            <button data-val="emerald" style="--sw:#10b981"><i></i>Emerald</button>
+          </div>
+        </div>
+      </div>
+      <button class="nav__burger" id="burger" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu">
+    <a href="./">Home</a>
+    <a href="./#services">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="./#contact">Contact</a>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <canvas id="pfCanvas" class="page-hero__canvas"></canvas>
+      <p class="section-tag reveal-line"><span>Mobile Apps</span></p>
+      <h1 class="reveal-up">Pocket-sized,<br /><em>feeling-first.</em></h1>
+      <p class="reveal-up">Native and cross-platform apps that people keep on their home screen.
+      Field tools, commerce, wellness: designed around the thumb, engineered for the battery.</p>
+      <div class="pf-stats">
+        <div class="stat reveal-up">
+          <span class="stat__num" data-count="60">0</span><span class="stat__plus">fps</span>
+          <p>Motion budget we design to, even on mid-range phones</p>
+        </div>
+        <div class="stat reveal-up">
+          <span class="stat__num" data-count="2">0</span><span class="stat__plus"></span>
+          <p>Platforms from one codebase with Flutter or React Native</p>
+        </div>
+        <div class="stat reveal-up">
+          <span class="stat__num" data-count="20">0</span><span class="stat__plus">yrs</span>
+          <p>Of product craft behind every screen we ship</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED CASE STUDY: DRIFT ============ -->
+    <section class="drift">
+      <p class="section-tag reveal-line"><span>Featured case study</span></p>
+      <h2 class="section-title reveal-up">Drift,<br /><em>a soft landing into sleep.</em></h2>
+      <p class="drift__lede reveal-up">
+        Drift is a sleep and relaxation app imagined and built end to end by Wizard:
+        product spec, brand, UX, engineering and audio design. Sessions like
+        <em>Coastal Night</em>, <em>Rainfall System</em> and <em>Northern Lights</em> pair
+        living gradient visuals with layered soundscapes that fade as you do.
+      </p>
+
+      <div class="phone-grid">
+        <figure class="phone reveal-up">
+          <img src="/assets/work/drift/drift-home.jpg" alt="Drift home screen: Ready to soften into sleep, with session cards" loading="lazy" />
+          <figcaption>A calm home: one question, one tap to begin</figcaption>
+        </figure>
+        <figure class="phone reveal-up">
+          <img src="/assets/work/drift/drift-session.jpg" alt="Drift session screen: Coastal Night with sleep timer options" loading="lazy" />
+          <figcaption>Sessions with sleep timers and a premium tier</figcaption>
+        </figure>
+        <figure class="phone reveal-up">
+          <img src="/assets/work/drift/drift-timer.jpg" alt="Drift countdown: minutes until sleep over a dimming gradient" loading="lazy" />
+          <figcaption>The screen dims and the audio fades as sleep nears</figcaption>
+        </figure>
+        <figure class="phone reveal-up">
+          <img src="/assets/work/drift/drift-makers.jpg" alt="Drift makers screen: designed in Kolkata, for the world" loading="lazy" />
+          <figcaption>Designed in Kolkata. For the world.</figcaption>
+        </figure>
+      </div>
+
+      <div class="drift__cols">
+        <div class="reveal-up">
+          <h3>What we built</h3>
+          <ul class="service__points">
+            <li>Living, multi-point gradient visuals rendered on the GPU, with a dimming scheduler tuned for bedtime</li>
+            <li>A three-layer synthesized audio engine with an exponential sleep fader, so sound never cuts, it dissolves</li>
+            <li>A twenty-session catalog with breath guidance, sleep timers and a premium tier</li>
+            <li>Architecture written to port one-to-one to native Android (Kotlin, Compose, AGSL)</li>
+          </ul>
+        </div>
+        <div class="reveal-up">
+          <h3>How it's made</h3>
+          <div class="service__tags">
+            <span>React</span><span>TypeScript</span><span>WebGL</span><span>Web Audio</span><span>Vite</span><span>Kotlin-ready</span><span>Compose</span><span>AGSL</span>
+          </div>
+          <p class="drift__note">Built web-first for rapid iteration, with every module mirrored to its
+          Android counterpart so the native port is a translation, not a rewrite.</p>
+          <div class="drift__actions">
+            <a class="btn btn--fill" href="https://pixeljoy1.github.io/MeditApp1.1_/" target="_blank" rel="noopener" data-magnetic>Try the live prototype</a>
+            <a class="btn btn--ghost" href="./#contact" data-magnetic>Start your app</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section class="marquee marquee--alt" aria-label="Mobile capabilities">
+      <div class="marquee__track" data-speed="-1">
+        <span>Flutter</span><i>·</i><span>React Native</span><i>·</i><span>Kotlin</span><i>·</i><span>Compose</span><i>·</i>
+        <span>Offline-first</span><i>·</i><span>Push &amp; deep links</span><i>·</i><span>Store releases</span><i>·</i>
+        <span>Crash monitoring</span><i>·</i><span>WebGL</span><i>·</i><span>Audio engines</span><i>·</i>
+      </div>
+    </section>
+
+    <footer class="contact">
+      <div class="contact__inner">
+        <h2 class="contact__title reveal-up">Your app,<br /><em>done wizardly.</em></h2>
+        <a class="contact__mail reveal-up" href="mailto:info@wizardcomm.net" data-magnetic>info@wizardcomm.net</a>
+        <div class="contact__brand">
+          <img src="/assets/logo.png" alt="Wizard Communication" class="logo-img logo-img--light" />
+          <img src="/assets/logo-footer.png" alt="Wizard Communication" class="logo-img logo-img--dark" />
+        </div>
+        <div class="contact__bottom">
+          <span>© 2026 Wizard Communications Pvt Ltd. All rights reserved.</span>
+          <a href="portfolio.html">← All projects</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script type="module" src="/src/portfolio.js"></script>
+</body>
+</html>

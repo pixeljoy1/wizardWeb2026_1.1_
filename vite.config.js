@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         portfolio: resolve(__dirname, 'portfolio.html'),
+        apps: resolve(__dirname, 'apps.html'),
         notFound: resolve(__dirname, '404.html'),
       },
     },

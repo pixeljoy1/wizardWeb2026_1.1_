@@ -610,6 +610,31 @@ body.is-loaded .hero__word .ch { transform: none; }
 .pf-card h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; margin: 0.4rem 0 0.5rem; }
 .pf-card p { color: var(--ink-dim); font-size: 0.85rem; }
 
+/* ---------- Mobile Apps page / Drift case study ---------- */
+.drift__lede { max-width: 700px; color: var(--ink-dim); font-size: clamp(1rem, 1.6vw, 1.15rem); margin-bottom: clamp(2.5rem, 6vh, 4rem); }
+.drift__lede em { color: var(--accent); }
+.phone-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.8rem;
+  margin-bottom: clamp(3rem, 8vh, 5rem);
+}
+.phone { margin: 0; }
+.phone img {
+  width: 100%; display: block; aspect-ratio: 9 / 19.2; object-fit: cover; object-position: center 8%;
+  border-radius: 26px; border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: transform 0.5s var(--ease);
+}
+.phone:hover img { transform: translateY(-8px) scale(1.02); }
+.phone figcaption {
+  margin-top: 0.9rem; text-align: center;
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.drift__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+.drift__cols h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; margin-bottom: 1.2rem; }
+.drift__note { color: var(--ink-dim); font-size: 0.92rem; margin-top: 1.4rem; max-width: 480px; }
+.drift__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.8rem; }
+
 /* ---------- 404 page ---------- */
 .p404 { min-height: 100svh; display: grid; place-items: center; text-align: center; position: relative; overflow: hidden; }
 .p404__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
