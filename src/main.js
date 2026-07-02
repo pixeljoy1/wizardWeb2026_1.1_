@@ -1,5 +1,8 @@
 import { mountScene } from './scene.js';
 
+/* ============ Build version pill ============ */
+document.querySelectorAll('.ver-pill').forEach((el) => { el.textContent = __BUILD_VERSION__; });
+
 /* ============ Preloader ============ */
 const preloader = document.getElementById('preloader');
 const preCount = document.getElementById('preCount');
@@ -148,10 +151,12 @@ if (voices.length) {
   setInterval(() => show(idx + 1), 7000);
 }
 
-/* ============ Case card tilt ============ */
+/* ============ Case card tilt (pointer devices only) ============ */
+const canHover = matchMedia('(hover: hover)').matches;
 document.querySelectorAll('[data-tilt]').forEach((card) => {
   const visual = card.querySelector('.case__visual');
   if (visual) visual.style.setProperty('--h', visual.dataset.hue);
+  if (!canHover) return;
   card.addEventListener('pointermove', (e) => {
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -179,7 +184,7 @@ if (cursor && matchMedia('(hover: hover)').matches) {
   });
 }
 
-document.querySelectorAll('[data-magnetic]').forEach((el) => {
+if (canHover) document.querySelectorAll('[data-magnetic]').forEach((el) => {
   el.addEventListener('pointermove', (e) => {
     const r = el.getBoundingClientRect();
     el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.25}px, ${(e.clientY - r.top - r.height / 2) * 0.25}px)`;

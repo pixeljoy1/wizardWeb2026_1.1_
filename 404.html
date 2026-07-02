@@ -15,7 +15,7 @@
   <div class="cursor-dot" id="cursorDot"></div>
 
   <header class="nav">
-    <a class="nav__logo" href="./"><span class="nav__glyph">✦</span> Wizard<span class="nav__thin">Comm</span></a>
+    <a class="nav__logo" href="./"><span class="nav__glyph">✦</span> Wizard<span class="nav__thin">Comm</span> <span class="ver-pill">v1.01</span></a>
   </header>
 
   <main class="p404">
@@ -30,6 +30,8 @@
   <script type="module">
     import { mountScene } from '/src/scene.js';
     mountScene(document.getElementById('p404Canvas'), { density: 0.7, sigil: true });
+
+    document.querySelectorAll('.ver-pill').forEach((el) => { el.textContent = __BUILD_VERSION__; });
 
     const cursor = document.getElementById('cursor');
     const dot = document.getElementById('cursorDot');
