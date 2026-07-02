@@ -143,19 +143,19 @@ main { position: relative; z-index: 1; }
 /* ---------- Settings dropdown ---------- */
 .settings { position: relative; }
 .settings__btn {
-  display: inline-flex; align-items: center; gap: 0.55rem;
-  padding: 0.7rem 1.3rem; border-radius: 99px;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.9rem; border-radius: 99px;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
   background: var(--accent-soft); color: var(--ink);
-  cursor: pointer; font-family: var(--sans); font-size: 0.88rem; font-weight: 400; line-height: 1;
+  cursor: pointer; font-family: var(--sans); font-size: 0.78rem; font-weight: 400; line-height: 1;
   transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
-.settings__btn svg { width: 21px; height: 21px; color: var(--accent); transition: transform 0.4s var(--ease); }
+.settings__btn svg { width: 13px; height: 13px; color: var(--accent); transition: transform 0.4s var(--ease); }
 .settings__btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 .settings__btn:hover svg { color: #fff; transform: rotate(180deg); }
 @media (max-width: 640px) {
-  .settings__btn { padding: 0; width: 48px; height: 48px; justify-content: center; }
-  .settings__btn svg { width: 24px; height: 24px; }
+  .settings__btn { padding: 0; width: 38px; height: 38px; justify-content: center; }
+  .settings__btn svg { width: 15px; height: 15px; }
   .settings__btn span { display: none; }
 }
 .settings__panel {
@@ -389,24 +389,84 @@ body.is-loaded .hero__word .ch { transform: none; }
 .voices__nav button:hover { border-color: var(--accent); color: var(--accent); }
 #voiceCount { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-faint); }
 
-/* ---------- Team ---------- */
-.team__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.8rem; }
-.member {
-  border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
-  background: var(--bg-soft); box-shadow: var(--shadow);
-  transition: transform 0.4s var(--ease), border-color 0.4s;
+/* ---------- Team carousel ---------- */
+.team-carousel { margin: 0 calc(-1 * clamp(1.2rem, 6vw, 6rem)); }
+.team-track {
+  display: flex; gap: 1.6rem;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 1.5rem clamp(1.2rem, 18vw, 22rem) 2rem;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
-.member:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
-.member__photo { height: 240px; overflow: hidden; background: var(--accent-soft); }
-.member__photo img {
+.team-track::-webkit-scrollbar { display: none; }
+.tcard {
+  flex: 0 0 min(300px, 74vw); scroll-snap-align: center;
+  position: relative; border-radius: 20px; overflow: hidden; cursor: pointer;
+  aspect-ratio: 3 / 4; background: var(--accent-soft);
+  border: 1px solid var(--line); box-shadow: var(--shadow);
+  will-change: transform, opacity;
+}
+.tcard img {
   width: 100%; height: 100%; object-fit: cover; object-position: center top;
-  filter: grayscale(0.25); transition: filter 0.5s, transform 0.7s var(--ease);
+  filter: grayscale(0.3); transition: filter 0.5s, transform 0.8s var(--ease);
 }
-.member:hover .member__photo img { filter: none; transform: scale(1.05); }
-.member__info { padding: 1.2rem 1.3rem 1.5rem; }
-.member__name { font-size: 1.1rem; font-weight: 500; }
-.member__role { display: block; color: var(--accent); font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; margin: 0.3rem 0 0.5rem; }
-.member__yrs { color: var(--ink-dim); font-size: 0.82rem; }
+.tcard:hover img, .tcard:focus-visible img { filter: none; transform: scale(1.05); }
+.tcard__info {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 2.6rem 1.4rem 1.3rem;
+  background: linear-gradient(to top, rgba(8, 14, 18, 0.88), transparent);
+  color: #fff;
+}
+.tcard__info h3 { font-size: 1.15rem; font-weight: 500; }
+.tcard__info span {
+  display: block; margin-top: 0.25rem;
+  font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent-raw);
+}
+.team-nav { display: flex; gap: 1rem; padding: 0 clamp(1.2rem, 6vw, 6rem); }
+.team-nav button {
+  width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--bg-soft); color: var(--ink); font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+}
+.team-nav button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; visibility: hidden; }
+.modal.is-open { visibility: visible; }
+.modal__backdrop {
+  position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  opacity: 0; transition: opacity 0.45s var(--ease);
+}
+.modal.is-open .modal__backdrop { opacity: 1; }
+.modal__box {
+  position: relative; width: min(460px, calc(100vw - 2.2rem));
+  max-height: calc(100svh - 3rem); overflow-y: auto;
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 24px;
+  box-shadow: var(--shadow);
+  opacity: 0; transform: scale(0.9) translateY(28px);
+  transition: opacity 0.45s var(--ease), transform 0.55s var(--ease);
+}
+.modal.is-open .modal__box { opacity: 1; transform: none; }
+.modal__close {
+  position: absolute; top: 0.9rem; right: 0.9rem; z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%; border: 0;
+  background: color-mix(in srgb, var(--bg) 65%, transparent);
+  backdrop-filter: blur(8px);
+  color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.modal__close:hover { background: var(--accent); color: #fff; transform: rotate(90deg); }
+.modal__media { height: min(360px, 44svh); overflow: hidden; background: var(--accent-soft); }
+.modal__media img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.modal__body { padding: 1.6rem 1.8rem 2rem; }
+.modal__body h3 { font-family: var(--serif); font-size: 1.9rem; font-weight: 400; }
+.modal__role {
+  display: block; margin: 0.4rem 0 1rem;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent);
+}
+.modal__body p { color: var(--ink-dim); font-size: 0.94rem; }
 
 /* ---------- Contact / footer ---------- */
 .contact { position: relative; overflow: hidden; border-top: 1px solid var(--line); }

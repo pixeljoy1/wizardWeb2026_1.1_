@@ -98,15 +98,52 @@ const counter = new IntersectionObserver((entries) => {
 }, { threshold: 0.6 });
 document.querySelectorAll('[data-count]').forEach((el) => counter.observe(el));
 
-/* ============ Marquees ============ */
+/* ============ Marquees (auto-scroll + drag/swipe with momentum) ============ */
 document.querySelectorAll('.marquee__track').forEach((track) => {
   track.innerHTML += track.innerHTML; // duplicate for seamless loop
+  const wrap = track.parentElement;
   const speed = +track.dataset.speed || 1;
-  let x = 0;
+  let x = 0;          // position in % of track width
+  let vel = 0;        // fling momentum, %/frame
+  let auto = 1;       // auto-scroll factor, eases back in after a gesture
+  let dragging = false;
+  let lastX = 0;
+
+  wrap.style.touchAction = 'pan-y'; // horizontal gestures are ours, vertical scroll stays native
+  wrap.style.cursor = 'grab';
+
+  wrap.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    lastX = e.clientX;
+    vel = 0;
+    auto = 0; // finger down: marquee pauses
+    wrap.style.cursor = 'grabbing';
+    wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dpct = ((e.clientX - lastX) / track.offsetWidth) * 100;
+    lastX = e.clientX;
+    x += dpct;
+    vel = dpct;
+  });
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    wrap.style.cursor = 'grab';
+  };
+  wrap.addEventListener('pointerup', release);
+  wrap.addEventListener('pointercancel', release);
+
   (function move() {
-    x -= 0.045 * speed;
-    if (x <= -50) x += 50;
-    if (x > 0) x -= 50;
+    if (!dragging) {
+      x += vel;             // fling carries on...
+      vel *= 0.94;          // ...and decays
+      auto = Math.min(1, auto + 0.008); // auto-scroll fades back in
+      x -= 0.045 * speed * auto;
+    }
+    while (x <= -50) x += 50;
+    while (x > 0) x -= 50;
     track.style.transform = `translateX(${x}%)`;
     requestAnimationFrame(move);
   })();
@@ -152,6 +189,72 @@ if (matchMedia('(hover: hover)').matches) {
       card.style.transform = `perspective(900px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) translateY(-4px)`;
     });
     card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+  });
+}
+
+/* ============ Team carousel ============ */
+const teamTrack = document.getElementById('teamTrack');
+if (teamTrack) {
+  const cards = [...teamTrack.querySelectorAll('.tcard')];
+
+  // cards swell toward the viewport centre and recede at the edges
+  const focus = () => {
+    const center = teamTrack.scrollLeft + teamTrack.clientWidth / 2;
+    cards.forEach((c) => {
+      const cc = c.offsetLeft + c.offsetWidth / 2;
+      const f = Math.max(0, 1 - Math.abs(cc - center) / (teamTrack.clientWidth * 0.85));
+      c.style.transform = `scale(${0.9 + 0.1 * f}) translateY(${(1 - f) * 12}px)`;
+      c.style.opacity = 0.55 + 0.45 * f;
+    });
+  };
+  teamTrack.addEventListener('scroll', () => requestAnimationFrame(focus), { passive: true });
+  window.addEventListener('resize', focus);
+  focus();
+
+  const step = () => cards[0].offsetWidth + 26;
+  document.getElementById('teamPrev').addEventListener('click', () => teamTrack.scrollBy({ left: -step(), behavior: 'smooth' }));
+  document.getElementById('teamNext').addEventListener('click', () => teamTrack.scrollBy({ left: step(), behavior: 'smooth' }));
+
+  /* ---- member modal: open on card tap, close on X / Esc / backdrop ---- */
+  const modal = document.getElementById('teamModal');
+  const mImg = document.getElementById('modalImg');
+  const mName = document.getElementById('modalName');
+  const mRole = document.getElementById('modalRole');
+  const mBio = document.getElementById('modalBio');
+  const closeBtn = document.getElementById('modalClose');
+
+  const open = (card) => {
+    mImg.src = card.dataset.img;
+    mImg.alt = card.dataset.name;
+    mName.textContent = card.dataset.name;
+    mRole.innerHTML = card.dataset.role;
+    mBio.textContent = card.dataset.bio;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  };
+  const close = () => {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  cards.forEach((card) => {
+    // a drag across the carousel shouldn't fire the modal
+    let downX = 0;
+    card.addEventListener('pointerdown', (e) => { downX = e.clientX; });
+    card.addEventListener('click', (e) => {
+      if (Math.abs(e.clientX - downX) < 8) open(card);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(card); }
+    });
+  });
+  closeBtn.addEventListener('click', close);
+  document.getElementById('modalBackdrop').addEventListener('click', close);
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
   });
 }
 
