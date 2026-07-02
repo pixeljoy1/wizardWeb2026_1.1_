@@ -366,8 +366,17 @@ body.is-loaded .hero__word .ch { transform: none; }
 }
 .service__cta:hover { border-color: var(--accent); }
 @media (max-width: 640px) {
-  .service { grid-template-columns: 2.4rem 1fr; grid-template-areas: "idx name" ". desc" ". detail"; }
+  .service {
+    grid-template-columns: 1fr;
+    grid-template-areas: "idx" "name" "desc" "detail";
+    gap: 0.45rem 0;
+    padding: 1.7rem 0.4rem;
+  }
+  .service:hover { padding-left: 0.4rem; }
   .service__arrow { display: none; }
+  .service__desc { max-width: none; }
+  .service__detail-inner { max-width: none; }
+  .service__points { grid-template-columns: 1fr; }
 }
 
 /* ---------- Work / case cards ---------- */
