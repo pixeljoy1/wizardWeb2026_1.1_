@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Wizard Communication</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body data-page="404">
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <header class="nav">
+    <a class="nav__logo" href="./"><span class="nav__glyph">✦</span> Wizard<span class="nav__thin">Comm</span></a>
+  </header>
+
+  <main class="p404">
+    <canvas id="p404Canvas" class="p404__canvas"></canvas>
+    <div class="p404__inner">
+      <h1 class="p404__code">4<em>0</em>4</h1>
+      <p class="p404__msg">This spell fizzled — the page you seek has vanished beyond the veil.</p>
+      <a href="./" class="btn btn--fill" data-magnetic>Return to the known world</a>
+    </div>
+  </main>
+
+  <script type="module">
+    import { mountScene } from '/src/scene.js';
+    mountScene(document.getElementById('p404Canvas'), { density: 0.7, sigil: true });
+
+    const cursor = document.getElementById('cursor');
+    const dot = document.getElementById('cursorDot');
+    if (matchMedia('(hover: hover)').matches) {
+      let cx = 0, cy = 0, tx = 0, ty = 0;
+      window.addEventListener('pointermove', (e) => {
+        tx = e.clientX; ty = e.clientY;
+        dot.style.transform = `translate(${tx}px, ${ty}px) translate(-50%,-50%)`;
+      });
+      (function follow() {
+        cx += (tx - cx) * 0.16; cy += (ty - cy) * 0.16;
+        cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`;
+        requestAnimationFrame(follow);
+      })();
+      document.querySelectorAll('a').forEach((el) => {
+        el.addEventListener('pointerenter', () => cursor.classList.add('is-hover'));
+        el.addEventListener('pointerleave', () => cursor.classList.remove('is-hover'));
+      });
+    }
+  </script>
+</body>
+</html>
