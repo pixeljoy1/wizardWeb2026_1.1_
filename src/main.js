@@ -224,7 +224,9 @@ if (teamTrack) {
   const closeBtn = document.getElementById('modalClose');
 
   const open = (card) => {
-    mImg.src = card.dataset.img;
+    // reuse the card thumbnail's resolved URL; data-img paths aren't base-rewritten by Vite
+    const thumb = card.querySelector('img');
+    mImg.src = thumb.currentSrc || thumb.src;
     mImg.alt = card.dataset.name;
     mName.textContent = card.dataset.name;
     mRole.innerHTML = card.dataset.role;
