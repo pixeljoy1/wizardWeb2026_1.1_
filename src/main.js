@@ -1,4 +1,5 @@
 import { mountScene } from './scene.js';
+import { mountHeroMark } from './heroMark.js';
 import { initCommon } from './common.js';
 
 initCommon();
@@ -34,10 +35,11 @@ document.querySelectorAll('[data-split]').forEach((el) => {
 });
 
 /* ============ WebGL scenes ============ */
-/* Hero runs the original nebula. The particle-arrow construct is kept in
-   heroScene.js; to bring it back: mountHeroScene(heroCanvas) */
+/* Hero runs the 3D brand mark (heroMark.js). Reverts on file:
+   nebula = mountScene(heroCanvas, { density: 1, sigil: true }),
+   particle arrow = mountHeroScene(heroCanvas) from heroScene.js */
 const heroCanvas = document.getElementById('heroCanvas');
-const heroScene = heroCanvas ? mountScene(heroCanvas, { density: 1, sigil: true }) : null;
+const heroScene = heroCanvas ? mountHeroMark(heroCanvas) : null;
 const footCanvas = document.getElementById('footCanvas');
 if (footCanvas) mountScene(footCanvas, { density: 0.45, sigil: false });
 

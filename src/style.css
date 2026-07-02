@@ -79,47 +79,17 @@ main { position: relative; z-index: 1; }
 .preloader__count { font-family: var(--mono); font-size: 1rem; color: var(--ink-dim); min-width: 3ch; }
 @keyframes pulse { 50% { opacity: 0.45; } }
 
-/* ---------- Cursor: the Wizard arrow, orbited by sparks ---------- */
-@media (hover: hover) and (pointer: fine) {
-  * { cursor: none !important; }
+/* ---------- Cursor ---------- */
+.cursor, .cursor-dot { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99; border-radius: 50%; }
+.cursor {
+  width: 36px; height: 36px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s;
 }
-.wcursor { position: fixed; top: 0; left: 0; z-index: 99; pointer-events: none; }
-.wcursor__inner {
-  position: relative;
-  /* hotspot: the arrow tip (svg 7,5 at 27px render) sits on the pointer */
-  transform: translate(-5.5px, -4px);
-  transition: transform 0.35s var(--ease);
-}
-.wcursor.is-hover .wcursor__inner { transform: translate(-5.5px, -4px) scale(1.4); }
-.wcursor__arrow { width: 27px; height: 27px; display: block; will-change: transform; }
-.wcursor__arrow path {
-  fill: var(--accent);
-  stroke: var(--bg); stroke-width: 1.6; stroke-linejoin: round;
-}
-.wcursor__node { fill: var(--ink); stroke: var(--bg); stroke-width: 1.2; }
-.wcursor__node--sm { fill: var(--accent-hot); }
-.wcursor__orbit {
-  position: absolute; left: 11px; top: 11px;
-  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
-  animation: worbit 2.4s linear infinite;
-  opacity: 0.9;
-}
-.wcursor__orbit--2 {
-  width: 4px; height: 4px; opacity: 0.6;
-  animation: worbit 3.4s linear infinite reverse;
-  --orbit-r: 27px;
-}
-.wcursor__orbit--3 {
-  /* a stray pixel, like the squares at the logo's base */
-  width: 4px; height: 4px; border-radius: 1px; background: var(--ink);
-  animation: worbit 1.7s linear infinite;
-  --orbit-r: 15px; opacity: 0.75;
-}
-@keyframes worbit {
-  from { transform: rotate(0deg) translateX(var(--orbit-r, 21px)) rotate(45deg); }
-  to { transform: rotate(360deg) translateX(var(--orbit-r, 21px)) rotate(405deg); }
-}
-@media (hover: none) { .wcursor { display: none; } }
+.cursor.is-hover { width: 64px; height: 64px; background: var(--accent-soft); }
+.cursor-dot { width: 5px; height: 5px; background: var(--accent); transform: translate(-50%, -50%); }
+@media (hover: none) { .cursor, .cursor-dot { display: none; } }
 
 /* ---------- Progress ---------- */
 .progress {
